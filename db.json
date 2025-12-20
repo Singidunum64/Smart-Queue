@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@queue.com",
+      "password": "admin123",
+      "role": "admin"
+    }
+  ],
+  "queues": [
+    {
+      "id": 1,
+      "name": "Šalter za dokumenta",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Informacije",
+      "active": true
+    }
+  ],
+  "tickets": []
+}
