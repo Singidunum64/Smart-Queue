@@ -1,49 +1,47 @@
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Home from "./pages/Home";
-// import Login from "./pages/Login";
-// import Register from "./pages/Register";
-// import AdminPanel from "./pages/AdminPanel";
-// import MyTicket from "./pages/MyTicket";
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/login" element={<Login />} />
-//         <Route path="/register" element={<Register />} />
-//         <Route path="/my-ticket" element={<MyTicket />} />
-//         <Route path="/admin" element={<AdminPanel />} />
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminPanel from "./pages/AdminPanel";
 import MyTicket from "./pages/MyTicket";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <div>
-      {/* privremena navigacija za testiranje */}
+      {/* privremena navigacija */}
       <nav style={{ marginBottom: "20px" }}>
         <Link to="/">Home</Link> |{" "}
         <Link to="/login">Login</Link> |{" "}
-        <Link to="/register">Register</Link>
+        <Link to="/register">Register</Link> |{" "}
+        <Link to="/my-ticket">My Ticket</Link> |{" "}
+        <Link to="/admin">Admin</Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/my-ticket" element={<MyTicket />} />
-        <Route path="/admin" element={<AdminPanel />} />
+
+        {/* user ruta */}
+        <Route
+          path="/my-ticket"
+          element={
+            <ProtectedRoute role="user">
+              <MyTicket />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* admin ruta */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminPanel />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
