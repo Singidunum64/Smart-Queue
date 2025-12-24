@@ -27,5 +27,13 @@
       "active": true
     }
   ],
-  "tickets": []
+  "tickets": [
+    {
+      "id": "d241",
+      "queueId": "1",
+      "userId": "c0e3",
+      "number": 1,
+      "status": "waiting"
+    }
+  ]
 }
