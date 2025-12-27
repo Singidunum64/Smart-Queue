@@ -1,21 +1,35 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import { api } from "../services/api";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+  };
 
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, "Ime mora imati bar 2 karaktera")
+      .required("Ime je obavezno"),
+    email: Yup.string()
+      .email("Neispravan email format")
+      .required("Email je obavezan"),
+    password: Yup.string()
+      .min(6, "Lozinka mora imati najmanje 6 karaktera")
+      .required("Lozinka je obavezna"),
+  });
+
+  const onSubmit = async (values) => {
     const newUser = {
-      name,
-      email,
-      password,
-      role: "user"
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      role: "user",
     };
 
     await api.createUser(newUser);
@@ -25,29 +39,31 @@ const Register = () => {
   return (
     <div>
       <h2>Registracija</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Ime"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Lozinka"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Registruj se</button>
-      </form>
+
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        <Form>
+          <div>
+            <Field name="name" placeholder="Ime" />
+            <ErrorMessage name="name" component="div" />
+          </div>
+
+          <div>
+            <Field name="email" type="email" placeholder="Email" />
+            <ErrorMessage name="email" component="div" />
+          </div>
+
+          <div>
+            <Field name="password" type="password" placeholder="Lozinka" />
+            <ErrorMessage name="password" component="div" />
+          </div>
+
+          <button type="submit">Registruj se</button>
+        </Form>
+      </Formik>
     </div>
   );
 };
