@@ -1,22 +1,18 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminPanel from "./pages/AdminPanel";
 import MyTicket from "./pages/MyTicket";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotAuthorized from "./pages/NotAuthorized";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
-    <div>
-      {/* privremena navigacija */}
-      <nav style={{ marginBottom: "20px" }}>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/login">Login</Link> |{" "}
-        <Link to="/register">Register</Link> |{" "}
-        <Link to="/my-ticket">My Ticket</Link> |{" "}
-        <Link to="/admin">Admin</Link>
-      </nav>
+    <>
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -37,13 +33,15 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute role="admin">
+            <AdminRoute>
               <AdminPanel />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
+
+        <Route path="/not-authorized" element={<NotAuthorized />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
