@@ -34,6 +34,13 @@
       "userId": "c0e3",
       "number": 1,
       "status": "called"
+    },
+    {
+      "id": "cc81",
+      "queueId": "1",
+      "userId": "c0e3",
+      "number": 2,
+      "status": "called"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../styles/admin.css";
 
 const AdminPanel = () => {
   const [queues, setQueues] = useState([]);
@@ -65,29 +66,46 @@ const AdminPanel = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Admin Panel</h1>
 
-      <h3>Novi red</h3>
-      <input
-        value={newQueue}
-        onChange={(e) => setNewQueue(e.target.value)}
-      />
-      <button onClick={addQueue}>Dodaj red</button>
+      <div className="admin-add">
+        <h3>Novi red</h3>
+        <input
+          value={newQueue}
+          onChange={(e) => setNewQueue(e.target.value)}
+          placeholder="Naziv reda"
+        />
+        <button onClick={addQueue}>Dodaj red</button>
+      </div>
 
       <h3>Postojeći redovi</h3>
-      <ul>
+
+      <div className="admin-list">
         {queues.map((q) => (
-          <li key={q.id}>
+          <div className="admin-card" key={q.id}>
             <strong>{q.name}</strong>
-            <button onClick={() => callNext(q.id)}>Pozovi sledećeg</button>
-            <button onClick={() => deleteQueue(q.id)}>Obriši</button>
-          </li>
+
+            <div className="admin-actions">
+              <button
+                className="call-btn"
+                onClick={() => callNext(q.id)}
+              >
+                Pozovi sledećeg
+              </button>
+
+              <button
+                className="delete-btn"
+                onClick={() => deleteQueue(q.id)}
+              >
+                Obriši
+              </button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
 
 export default AdminPanel;
-

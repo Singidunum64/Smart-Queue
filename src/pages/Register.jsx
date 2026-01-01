@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { api } from "../services/api";
+import "../styles/auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -38,32 +39,34 @@ const Register = () => {
 
   return (
     <div>
-      <h2>Registracija</h2>
+      <div className="auth-wrapper">
+        <h2>Registracija</h2>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        <Form>
-          <div>
-            <Field name="name" placeholder="Ime" />
-            <ErrorMessage name="name" component="div" />
-          </div>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          <Form>
+            <div>
+              <Field name="name" placeholder="Ime" />
+              <ErrorMessage name="name" component="div" />
+            </div>
 
-          <div>
-            <Field name="email" type="email" placeholder="Email" />
-            <ErrorMessage name="email" component="div" />
-          </div>
+            <div>
+              <Field name="email" type="email" placeholder="Email" />
+              <ErrorMessage name="email" component="div" />
+            </div>
 
-          <div>
-            <Field name="password" type="password" placeholder="Lozinka" />
-            <ErrorMessage name="password" component="div" />
-          </div>
+            <div>
+              <Field name="password" type="password" placeholder="Lozinka" />
+              <ErrorMessage name="password" component="div" />
+            </div>
 
-          <button type="submit">Registruj se</button>
-        </Form>
-      </Formik>
+            <button type="submit">Registruj se</button>
+          </Form>
+        </Formik>
+        </div>
     </div>
   );
 };

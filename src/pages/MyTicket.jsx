@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import "../styles/ticket.css";
 
 const MyTicket = () => {
   const { user } = useAuth();
@@ -18,14 +19,27 @@ const MyTicket = () => {
   }, [user]);
 
   if (!ticket) {
-    return <p>Nemate aktivan broj.</p>;
+    return (
+      <div className="container">
+        <p className="empty-message">Nemate aktivan broj.</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Moj broj u redu</h2>
-      <p><strong>Redni broj:</strong> {ticket.number}</p>
-      <p><strong>Status:</strong> {ticket.status}</p>
+    <div className="container">
+      <div className="ticket-card">
+        <h2>Moj broj u redu</h2>
+
+        <div className="ticket-info">
+          <p>
+            <strong>Redni broj:</strong> {ticket.number}
+          </p>
+          <p>
+            <strong>Status:</strong> {ticket.status}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import "../styles/home.css";
 
 const Home = () => {
   const [queues, setQueues] = useState([]);
@@ -38,27 +39,24 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Dostupni redovi</h1>
+    <div className="container">
+      <h2>Dostupni redovi</h2>
 
       {!user && <p>Uloguj se da bi uzeo broj.</p>}
 
-      <ul>
+      <div className="queue-list">
         {queues.map((queue) => (
-          <li key={queue.id}>
+          <div className="queue-card" key={queue.id}>
             <strong>{queue.name}</strong>
 
             {user && user.role === "user" && (
-              <button
-                style={{ marginLeft: "10px" }}
-                onClick={() => takeTicket(queue.id)}
-              >
+              <button onClick={() => takeTicket(queue.id)}>
                 Uzmi broj
               </button>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
