@@ -26,6 +26,12 @@
   background-color: #2563eb;
 }
 
+.queue-info {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
 .admin-actions .delete-btn {
   background-color: #ef4444; 
   color: white;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/admin.css";
 
 const AdminPanel = () => {
@@ -6,9 +6,25 @@ const AdminPanel = () => {
   const [tickets, setTickets] = useState([]);
   const [newQueue, setNewQueue] = useState("");
 
+  const previousTicketCount = useRef(0);
+
   useEffect(() => {
     fetchQueues();
     fetchTickets();
+
+    const interval = setInterval(async () => {
+      const res = await fetch("http://localhost:3001/tickets");
+      const data = await res.json();
+
+      if (data.length > previousTicketCount.current) {
+        alert("Novi korisnik je uzeo broj u redu!");
+      }
+
+      previousTicketCount.current = data.length;
+      setTickets(data);
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchQueues = async () => {
@@ -20,6 +36,7 @@ const AdminPanel = () => {
   const fetchTickets = async () => {
     const res = await fetch("http://localhost:3001/tickets");
     const data = await res.json();
+    previousTicketCount.current = data.length;
     setTickets(data);
   };
 
@@ -84,7 +101,17 @@ const AdminPanel = () => {
       <div className="admin-list">
         {queues.map((q) => (
           <div className="admin-card" key={q.id}>
-            <strong>{q.name}</strong>
+            <div className="queue-title">{q.name}</div>
+
+            <p className="queue-info">
+              Čeka{" "}
+              {
+                tickets.filter(
+                  (t) => t.queueId === q.id && t.status === "waiting"
+                ).length
+              }{" "}
+              korisnik/a
+            </p>
 
             <div className="admin-actions">
               <button
